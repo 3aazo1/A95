@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بورصة العلاقات وسيكولوجية تفريغ الغضب</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght=300;400;500;600;700;800&display=swap');
+
+        :root {
+            /* Light Mode Variables */
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --accent: #dc2626;
+            --accent-light: #fef2f2;
+            --border: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.02);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+            --scrollbar-thumb: rgba(37, 99, 235, 0.5);
+        }
+
+        [data-theme="dark"] {
+            /* Dark Mode Variables */
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-light: rgba(59, 130, 246, 0.1);
+            --accent: #ef4444;
+            --accent-light: rgba(239, 68, 68, 0.1);
+            --border: #334155;
+            --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+            --scrollbar-thumb: rgba(59, 130, 246, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body, .content-card, .intro-card, header h1, header .subtitle, .section-title, p, li, .quote-block {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        html, body {
+            scrollbar-width: none;
+            scroll-behavior: auto !important;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.85;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .main-image-container {
+            text-align: center;
+            margin-bottom: 50px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .main-image-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.5s ease;
+        }
+
+        .main-image-container:hover img {
+            transform: scale(1.02);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        header .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .intro-card {
+            background-color: var(--accent-light);
+            border-right: 5px solid var(--accent);
+            padding: 30px;
+            margin-bottom: 40px;
+            border-radius: 8px 20px 20px 8px;
+        }
+
+        .intro-card p {
+            font-size: 1.15rem;
+            margin: 0 0 15px 0;
+            color: var(--text-main);
+        }
+
+        .intro-card p:last-child {
+            margin-bottom: 0;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 28px;
+            background-color: var(--primary);
+            border-radius: 6px;
+        }
+
+        .content-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .content-card p {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin: 0 0 18px 0;
+        }
+
+        .sub-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 25px 0 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sub-list li {
+            position: relative;
+            padding-right: 25px;
+            font-size: 1.1rem;
+        }
+
+        .sub-list li::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 14px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+        }
+
+        .sub-list li strong {
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        .highlight {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 10px;
+            font-weight: 700;
+            border-radius: 6px;
+        }
+
+        .quote-block {
+            text-align: center;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .quote-block::before, .quote-block::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary-light);
+            position: absolute;
+            font-family: serif;
+        }
+        .quote-block::before { top: 10px; right: 20px; }
+        .quote-block::after { bottom: -20px; left: 20px; }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 2px solid var(--border);
+            text-align: center;
+        }
+
+        footer h3 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        footer p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin: 0 0 20px 0;
+        }
+
+        /* أزرار وشريط التمرير */
+        .theme-toggle-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: var(--shadow-lg);
+        }
+        .theme-toggle-btn:active { transform: translateY(0); }
+
+        .theme-toggle-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: var(--text-main);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .sun-icon { display: block; }
+        .moon-icon { display: none; }
+        [data-theme="dark"] .sun-icon { display: none; }
+        [data-theme="dark"] .moon-icon { display: block; }
+
+        .custom-scrollbar-track {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 16px;
+            height: 100%;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .custom-scrollbar-track.visible,
+        .custom-scrollbar-track:hover {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .custom-scrollbar-thumb {
+            position: absolute;
+            top: 0;
+            right: 4px;
+            width: 6px;
+            background-color: var(--scrollbar-thumb);
+            border-radius: 10px;
+            cursor: grab;
+            transition: width 0.15s ease, background-color 0.15s ease;
+            will-change: transform;
+        }
+
+        .custom-scrollbar-track:hover .custom-scrollbar-thumb,
+        .custom-scrollbar-track.dragging .custom-scrollbar-thumb {
+            width: 10px;
+            right: 2px;
+            background-color: var(--primary);
+        }
+
+        .custom-scrollbar-track.dragging .custom-scrollbar-thumb {
+            cursor: grabbing;
+            transition: none;
+        }
+
+        /* كلاسات الأنيميشن (جديد) */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 640px) {
+            header h1 { font-size: 2rem; }
+            .container { padding: 30px 15px; }
+            .theme-toggle-btn { bottom: 20px; left: 20px; width: 48px; height: 48px; }
+            .custom-scrollbar-track { width: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="theme-toggle-btn" id="themeToggle" aria-label="تغيير المظهر">
+        <svg class="sun-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+    </button>
+
+    <div class="custom-scrollbar-track" id="scrollTrack">
+        <div class="custom-scrollbar-thumb" id="scrollThumb"></div>
+    </div>
+
+    <main class="container">
+
+        <div class="main-image-container fade-up">
+            <img src="1000102048.jpg" alt="تحليل بورصة العلاقات الاجتماعية">
+        </div>
+
+        <header class="fade-up">
+            <h1>الجوهرة المكشوفة</h1>
+            <div class="subtitle">تفكيك سيكولوجية الغضب النفعي في بورصة العلاقات الاجتماعية</div>
+        </header>
+
+        <article>
+            <div class="intro-card fade-up">
+                <p>تخيل مشهداً اجتماعياً مألوفاً يتكرر في كل مكان: في مجلس واحد أو بيئة عمل، تجد شخصاً يبتلع إهانة مبطنة من رئيسه أو من شخص ميسور الحال بابتسامة باهتة وصمت تام، ثم يخرج ليفقد أعصابه ويصرخ في وجه زميله أو أحد أفراد أسرته بسبب كوب شاي انسكب بالخطأ! أو حتى بدون سبب؟</p>
+                <p>الجميع يتساءل: لماذا انفجر هنا ولم ينفجر هناك؟ الإجابة الصادمة التي تختبئ خلف أقنعة المجتمع هي أن الإنسان في لحظة الغضب لا يبحث عن "من أزعجه ليعاقبه"، بل يلتفت حوله ليختار "من يستطيع أن يفرغ فيه غضبه دون أن تتعطل مصالحه".</p>
+            </div>
+
+            <section>
+                <h2 class="section-title fade-up">أولاً: تسعير البشر في "بورصة العلاقات"</h2>
+                <div class="content-card fade-up">
+                    <p>الإنسان بطبيعته كائن نفعي بامتياز، وفي واقعه الاجتماعي لا يتعامل مع الناس كأنفس مجردة، بل كأرقام وأرصدة. قبل أن ينفجر الشخص غضباً، يقوم بمسح سريع لمحيطه الاجتماعي لتقييم الحاضرين:</p>
+                    <ul class="sub-list">
+                        <li><strong>الشخص (أ) يملك النفوذ:</strong> أو يقدم دعماً مادياً، أو تُقضى بيده المصالح؛ الانفجار فيه يعني "خسارة فادحة". النتيجة التلقائية هي كتم الغضب فوراً وتقديم المجاملات لتأمين بقاء هذه المصلحة.</li>
+                        <li><strong>الشخص (ب) لا يقدم ولا يؤخر:</strong> في ميزان المصالح؛ الانفجار فيه يعني "تكلفة صفرية". النتيجة هي تفريغ آمن لكل الشحنات المتراكمة.</li>
+                    </ul>
+                    <p style="margin-top: 20px; font-style: italic; color: var(--text-muted);">الأمر هنا لا علاقة له بمن أخطأ بحقك، بل بمن يملك رصيداً نفعياً يجعلك تحترمه وتحافظ على شعرة معاوية معه رغماً عنك.</p>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title fade-up">ثانياً: الابتسامة المدفوعة والانفجار المجاني</h2>
+                <div class="content-card fade-up">
+                    <p>في زحام الحياة، يقسم الإنسان من حوله إلى فئتين: فئة "مُربحة" تُدفع لها ضريبة الابتسام والتملق للحفاظ على تدفق المصالح، وفئة "غير مُربحة" تُستخدم كمساحة حرة لتفريغ الضغط.</p>
+                    <p>الشخص الذي ينفجر فيك فجأة وبدون مبرر، لم يخترك لأنك سيء أو لأنك الحلقة الأضعف، بل اختارك لأنك <span class="highlight">"مجاني"</span> في حساباته.</p>
+                    <p>هو يعلم يقيناً أن إغضابك لن يقطع عنه راتباً، ولن يوقف عنه دعماً مالياً، ولن يعطل له صفقة. أنت ببساطة هدف آمن لا تترتب على التضحية بمشاعره أي عواقب مادية أو اجتماعية مؤلمة.</p>
+                </div>
+            </section>
+
+            <div class="quote-block fade-up">
+                الغضب البشري لا يعبأ بالعدالة، بل يعبأ بالتكلفة والعواقب
+            </div>
+
+            <section>
+                <h2 class="section-title fade-up">ثالثاً: اختبار "المنفعة المفاجئة" لإثبات الجوهرة</h2>
+                <div class="content-card fade-up">
+                    <p>لتتأكد من أن السلوك البشري هنا تحركه المصلحة فقط، تخيل أن هذا الشخص "المجاني" الذي كان يُستخدم دائماً كهدف للانفجارات، قد ورث فجأة ثروة طائلة، أو أصبح في منصب يستطيع من خلاله تمرير مصالح الطرف الآخر وتسهيل أموره.</p>
+                    <p>لو تكرر نفس الموقف المزعج في اليوم التالي، هل سينفجر فيه مجدداً؟</p>
+                    <p><strong>مستحيل.</strong> ستتحول النبرة الحادة إلى ود واحترام، وسيتم اختلاق الأعذار له. الغضب هو نفسه، والموقف هو نفسه، لكن الذي تغير هو <span class="highlight">"التسعيرة الاجتماعية"</span> لهذا الشخص؛ لقد تحول من وجود "مجاني" إلى مصدر منفعة يجب التملق له والحرص عليه.</p>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title fade-up">رابعاً: لماذا نتألم عندما نكون في مرمى النيران؟</h2>
+                <div class="content-card fade-up">
+                    <p>عندما يصرخ في وجهك شخص بلا سبب واضح، فإن الألم الحقيقي لا يأتي من حدة الصوت أو بشاعة الكلمات. الألم ينبع من إدراكك العميق لقيمتك في سوق مصالح هذا الشخص.</p>
+                    <p>أنت تتألم لأن الموقف أخبرك بوضوح: <span style="color: var(--accent); font-weight: 800;">"لقد تم تقييمك كصفر نفعي، وإيذاؤك مسموح لأن غيابك أو زوالك لا يشكل أي خسارة"</span>.</p>
+                    <p>هذا الإفلاس النفعي في عين الآخر، وتأكدك من أنك مجرد أداة لتفريغ ضغط لم تتسبب به، هو ما يترك الجرح الحقيقي خصوصاً من الذين بدلوا القرابة والروابط الإنسانية المختلفة بالنفعية المادية الضيقة.</p>
+                </div>
+            </section>
+        </article>
+
+        <footer class="fade-up">
+            <h3>الخلاصة (الجوهرة مكشوفة)</h3>
+            <p>في النهاية، عندما ترى شخصاً يوزع الانفجارات على البعض، ويغدق الابتسامات والمجاملات على آخرين في نفس الغرفة, لا تسأل: "ما الذي فعلوه ليغضب؟"، بل اسأل السؤال الواقعي الوحيد: <strong>"أين تكمن مصلحته؟"</strong></p>
+            <p>ستجد دائماً أن الابتسامة تذهب طوعاً لمن يملك مفاتيح المنفعة، بينما يذهب الانفجار لمن لا يملكها. وإذا كنت أنت المستقبل الدائم لهذه الانفجارات، فالمشكلة ليست في أفعالك أو نواياك، بل في أنك تتواجد في محيط لا يرى فيك أي منفعة يخشى زوالها. وهذه أسوأ أنواع العلاقات والروابط أمام العلاقات الإنسانية الحقيقية.</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- 1. إدارة الوضع الليلي ---
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // --- 2. أنيميشن الظهور عند التمرير (Intersection Observer) ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // --- 3. شريط التمرير الجانبي الذكي ---
+        const scrollTrack = document.getElementById('scrollTrack');
+        const scrollThumb = document.getElementById('scrollThumb');
+        let fadeTimeout;
+        let isDragging = false;
+        let startY = 0;
+        let startScrollTop = 0;
+        let ticking = false;
+
+        function updateScrollbar() {
+            const totalHeight = document.documentElement.scrollHeight;
+            const viewportHeight = window.innerHeight;
+            const scrollTop = window.scrollY;
+
+            if (totalHeight <= viewportHeight) {
+                scrollTrack.style.display = 'none';
+                return;
+            } else {
+                scrollTrack.style.display = 'block';
+            }
+
+            const thumbHeight = Math.max((viewportHeight / totalHeight) * viewportHeight, 50);
+            scrollThumb.style.height = `${thumbHeight}px`;
+
+            const maxScrollTop = totalHeight - viewportHeight;
+            const maxThumbTop = viewportHeight - thumbHeight;
+            const thumbTop = (scrollTop / maxScrollTop) * maxThumbTop;
+            
+            scrollThumb.style.transform = `translateY(${thumbTop}px)`;
+            ticking = false;
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateScrollbar);
+                ticking = true;
+            }
+        }
+
+        function triggerScrollbarVisibility() {
+            scrollTrack.classList.add('visible');
+            clearTimeout(fadeTimeout);
+            if (!isDragging) {
+                fadeTimeout = setTimeout(() => {
+                    scrollTrack.classList.remove('visible');
+                }, 1200);
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            requestTick();
+            triggerScrollbarVisibility();
+        }, { passive: true });
+
+        window.addEventListener('resize', requestTick);
+
+        function handleMove(clientY) {
+            const totalHeight = document.documentElement.scrollHeight;
+            const viewportHeight = window.innerHeight;
+            const thumbHeight = scrollThumb.offsetHeight;
+            
+            const deltaY = clientY - startY;
+            const maxThumbTop = viewportHeight - thumbHeight;
+            const maxScrollTop = totalHeight - viewportHeight;
+
+            const currentThumbTop = ((startScrollTop / maxScrollTop) * maxThumbTop) + deltaY;
+            const boundedThumbTop = Math.max(0, Math.min(maxThumbTop, currentThumbTop));
+
+            const targetScrollTop = (boundedThumbTop / maxThumbTop) * maxScrollTop;
+            window.scrollTo(0, targetScrollTop);
+        }
+
+        scrollThumb.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startY = e.clientY;
+            startScrollTop = window.scrollY;
+            scrollTrack.classList.add('dragging', 'visible');
+            document.body.style.userSelect = 'none';
+            clearTimeout(fadeTimeout);
+            e.preventDefault();
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            window.requestAnimationFrame(() => handleMove(e.clientY));
+        }, { passive: true });
+
+        scrollThumb.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startY = e.touches[0].clientY;
+            startScrollTop = window.scrollY;
+            scrollTrack.classList.add('dragging', 'visible');
+            clearTimeout(fadeTimeout);
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            window.requestAnimationFrame(() => handleMove(e.touches[0].clientY));
+        }, { passive: true });
+
+        const endDrag = () => {
+            if (isDragging) {
+                isDragging = false;
+                scrollTrack.classList.remove('dragging');
+                document.body.style.userSelect = '';
+                triggerScrollbarVisibility();
+            }
+        };
+
+        window.addEventListener('mouseup', endDrag);
+        window.addEventListener('touchend', endDrag);
+
+        updateScrollbar();
+    </script>
+</body>
+</html>
