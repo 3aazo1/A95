@@ -349,7 +349,7 @@
         /* --- تنسيقات زر المشاركة على واتساب --- */
         .share-container {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 20px; /* تم تعديله ليكون متناسق مع التوقيع */
             padding-top: 20px;
         }
 
@@ -381,6 +381,31 @@
             fill: currentColor;
         }
 
+        /* --- تنسيقات توقيع الكاتب --- */
+        .author-signature {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .author-signature a {
+            color: var(--primary);
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .author-signature a:hover {
+            background-color: var(--primary-light);
+            color: var(--accent);
+        }
+
         @media (max-width: 640px) {
             header h1 { font-size: 2rem; }
             .container { padding: 30px 15px; }
@@ -409,7 +434,6 @@
     <main class="container">
 
         <div class="main-image-container fade-up">
-            <!-- تم تعديل اسم الصورة هنا ليتوافق مع الصورة المختارة وبصيغة png -->
             <img src="1000102048.png" alt="تحليل بورصة العلاقات الاجتماعية">
         </div>
 
@@ -472,6 +496,11 @@
             <h3>الخلاصة (الجوهرة مكشوفة)</h3>
             <p>في النهاية، عندما ترى شخصاً يوزع الانفجارات على البعض، ويغدق الابتسامات والمجاملات على آخرين في نفس الغرفة, لا تسأل: "ما الذي فعلوه ليغضب؟"، بل اسأل السؤال الواقعي الوحيد: <strong>"أين تكمن مصلحته؟"</strong></p>
             <p>ستجد دائماً أن الابتسامة تذهب طوعاً لمن يملك مفاتيح المنفعة، بينما يذهب الانفجار لمن لا يملكها. وإذا كنت أنت المستقبل الدائم لهذه الانفجارات، فالمشكلة ليست في أفعالك أو نواياك، بل في أنك تتواجد في محيط لا يرى فيك أي منفعة يخشى زوالها. وهذه أسوأ أنواع العلاقات والروابط أمام العلاقات الإنسانية الحقيقية.</p>
+
+            <!-- توقيع الكاتب -->
+            <div class="author-signature fade-up">
+                من مختارات: <a href="https://linktr.ee/abdul3ziz95" target="_blank" rel="noopener noreferrer">Abdu3ziz95</a>
+            </div>
 
             <!-- زر المشاركة على واتساب -->
             <div class="share-container fade-up">
